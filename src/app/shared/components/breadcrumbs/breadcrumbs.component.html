@@ -1,0 +1,5 @@
+<nav>
+  @for (breadcrumb of breadcrumbs; track $index) {
+    <a [routerLink]="breadcrumb.url">{{ breadcrumb.label }}</a> &gt;
+  }
+</nav>

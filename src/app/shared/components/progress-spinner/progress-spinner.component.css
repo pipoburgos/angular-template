@@ -1,0 +1,15 @@
+.spinner-container {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: 999999;
+}
+
+mat-progress-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
+  background-size: 100%;
+}
