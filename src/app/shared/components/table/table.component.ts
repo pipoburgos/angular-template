@@ -1,5 +1,6 @@
 import { CommonModule, DatePipe } from '@angular/common'
 import {
+  AfterContentInit,
   AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -13,7 +14,6 @@ import {
   QueryList,
   SimpleChanges,
   ViewChild,
-  AfterContentInit,
 } from '@angular/core'
 import { MatButtonModule } from '@angular/material/button'
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator'
@@ -24,7 +24,7 @@ import {
   MatTableDataSource,
   MatTableModule,
 } from '@angular/material/table'
-import { FechaPipe, EurosPipe, DialogService } from '@shared'
+import { DialogService, EurosPipe, FechaPipe } from '@shared'
 import { Subject } from 'rxjs'
 
 export interface Column {
@@ -33,7 +33,7 @@ export interface Column {
   width?: number
 }
 @Component({
-  selector: 'app-tabla',
+  selector: 'app-table',
   standalone: true,
   imports: [
     CommonModule,
@@ -46,10 +46,10 @@ export interface Column {
     EurosPipe,
   ],
   providers: [FechaPipe, DatePipe, EurosPipe],
-  templateUrl: './tabla.component.html',
+  templateUrl: './table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TablaComponent
+export class TableComponent
   implements OnChanges, OnDestroy, AfterViewInit, AfterContentInit
 {
   @Input() public showDetails = false
