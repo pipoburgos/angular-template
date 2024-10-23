@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core'
 })
 export class EurosPipe implements PipeTransform {
   public transform(value: number, currencySymbol = '€'): string {
-    if (value === null || value === undefined) {
+    if (value === null || value === undefined || value === 0) {
       return ''
     }
     const formattedValue = value.toLocaleString('es-ES', {

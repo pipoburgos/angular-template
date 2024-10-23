@@ -1,0 +1,84 @@
+<h2 mat-dialog-title>{{ config.title }}</h2>
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <mat-dialog-content>
+    @for (row of config.fields; track $index) {
+      <div class="form-row">
+        @for (field of row; track $index) {
+          @if (field.controlType === 'checkbox') {
+            <mat-checkbox
+              [formControlName]="field.formControlName"
+              appearance="fill"
+            >
+              {{ field.label }}
+            </mat-checkbox>
+            <mat-error>
+              {{
+                formsService.getErrorMessage(form.get(field.formControlName))
+              }}
+            </mat-error>
+          } @else {
+            <mat-form-field appearance="fill" [style.width]="field.width">
+              <mat-label>{{ field.label }}</mat-label>
+              @switch (field.controlType) {
+                @case ('input') {
+                  <input
+                    matInput
+                    [formControlName]="field.formControlName"
+                    [type]="field.type ?? 'text'"
+                  />
+                }
+                @case ('datepicker') {
+                  <ng-container>
+                    <input
+                      matInput
+                      [matDatepicker]="picker"
+                      [formControlName]="field.formControlName"
+                    />
+                    <mat-datepicker-toggle
+                      matIconSuffix
+                      [for]="picker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </ng-container>
+                }
+                @case ('textarea') {
+                  <app-text-area
+                    [control]="form.get(field.formControlName)"
+                    [maxLength]="field.maxLength!"
+                    [label]="field.label"
+                    [rows]="field.rows!"
+                  >
+                  </app-text-area>
+                }
+
+                @case ('select') {
+                  <mat-select [formControlName]="field.formControlName">
+                    <mat-option
+                      *ngFor="let option of field.options"
+                      [value]="option.value"
+                    >
+                      {{ option.label }}
+                    </mat-option>
+                  </mat-select>
+                }
+              }
+
+              <mat-error>
+                {{
+                  formsService.getErrorMessage(form.get(field.formControlName))
+                }}
+              </mat-error>
+            </mat-form-field>
+          }
+        }
+      </div>
+    }
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-raised-button cdkFocusInitial [disabled]="form.invalid">
+      Guardar
+    </button>
+    <button mat-button type="button" (click)="cancel()">Cancelar</button>
+  </mat-dialog-actions>
+</form>

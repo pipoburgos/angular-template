@@ -1,33 +1,52 @@
 import { AbstractControl, ValidatorFn } from '@angular/forms'
+import { isMoment } from 'moment'
 
 export function compareDate(
-  date: Date,
+  date: Date | undefined,
   comparison: '>' | '>=' | '===' | '<' | '<=',
-  error: string,
 ): ValidatorFn {
-  return (control: AbstractControl): Record<string, boolean> | null => {
-    if (!date || !control.value || !(control.value instanceof Date)) return null
+  return (control: AbstractControl): Record<string, string[]> | null => {
+    if (!date || !control.value) return null
+
+    let actual: Date
+    if (isMoment(control.value)) {
+      actual = control.value.toDate()
+    } else if (control.value instanceof Date) {
+      actual = control.value
+    } else {
+      return null
+    }
+
+    let before: Date
+    if (isMoment(date)) {
+      before = date.toDate()
+    } else if (date instanceof Date) {
+      before = date
+    } else {
+      return null
+    }
+
     switch (comparison) {
       case '>':
-        return control.value.getTime() > date.getTime()
+        return actual.getTime() > before.getTime()
           ? null
-          : { [error]: true }
+          : { ['compareDate']: ['Fecha inválida'] }
       case '>=':
-        return control.value.getTime() >= date.getTime()
+        return actual.getTime() >= before.getTime()
           ? null
-          : { [error]: true }
+          : { ['compareDate']: ['Fecha inválida'] }
       case '===':
-        return control.value.getTime() === date.getTime()
+        return actual.getTime() === before.getTime()
           ? null
-          : { [error]: true }
+          : { ['compareDate']: ['Fecha inválida'] }
       case '<':
-        return control.value.getTime() < date.getTime()
+        return actual.getTime() < before.getTime()
           ? null
-          : { [error]: true }
+          : { ['compareDate']: ['Fecha inválida'] }
       case '<=':
-        return control.value.getTime() <= date.getTime()
+        return actual.getTime() <= before.getTime()
           ? null
-          : { [error]: true }
+          : { ['compareDate']: ['Fecha inválida'] }
       default:
         return null
     }

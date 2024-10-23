@@ -1,0 +1,41 @@
+::ng-deep .mat-elevation-z8 table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+::ng-deep .mat-elevation-z8 tr {
+  border-bottom: 1px solid #ccc;
+}
+
+::ng-deep .mat-elevation-z8 tr:hover {
+  background-color: #1d428a;
+  color: #ccc; /* Efecto hover sobre las filas */
+}
+
+::ng-deep .mat-paginator {
+  margin-top: 10px; /* Espacio superior para el paginador */
+}
+
+::ng-deep .mat-elevation-z8 table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto; /* Las columnas ocupan solo el espacio necesario */
+}
+
+::ng-deep .mat-elevation-z8 th,
+::ng-deep .mat-elevation-z8 td {
+  border: 1px solid #ccc; /* Bordes */
+  padding: 8px;
+  text-align: center !important; /* Centrar el contenido */
+  vertical-align: middle; /* Centrar el contenido verticalmente */
+  max-width: 900px; /* Limitar el ancho de las celdas */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Mostrar puntos suspensivos si el contenido es demasiado largo */
+  word-wrap: break-word; /* Evitar que el texto se divida en varias líneas */
+}
+
+::ng-deep .mat-elevation-z8 th {
+  background-color: #f7f9f9 !important; /* Color de fondo del encabezado */
+  color: #1d428a !important; /* Color del texto del encabezado */
+  font-weight: bold !important;
+}

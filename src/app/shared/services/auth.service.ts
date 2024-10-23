@@ -24,8 +24,6 @@ export class AuthService {
   private readonly dialog = inject(MatDialog)
   private tokenResponse: TokenResponse | null = null
   private readonly storageService = inject(StorageService)
-  private usernamePrivate = ''
-  private roles: string[] = []
 
   public get access_token(): string | undefined {
     return this.tokenResponse?.access_token
@@ -35,25 +33,12 @@ export class AuthService {
     return !!this.tokenResponse
   }
 
-  public get username(): string {
-    return this.usernamePrivate
-  }
-
   public constructor() {
     this.getTokenFromStorage()
   }
 
   private getTokenFromStorage() {
     this.tokenResponse = this.storageService.get('token')
-  }
-
-  public saveUser(username: string, roles: string[]): void {
-    this.usernamePrivate = username
-    this.roles = roles
-  }
-
-  public isInRole(role: string): boolean {
-    return this.roles.some(r => r === role)
   }
 
   public login(username: string, password: string): Observable<TokenResponse> {

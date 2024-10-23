@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe } from '@angular/common'
+import { CommonModule } from '@angular/common'
 import {
   AfterContentInit,
   AfterViewInit,
@@ -24,14 +24,18 @@ import {
   MatTableDataSource,
   MatTableModule,
 } from '@angular/material/table'
-import { DialogService, EurosPipe, FechaPipe } from '@shared'
-import { Subject } from 'rxjs'
+import { MatTooltipModule } from '@angular/material/tooltip'
+import { DialogService, SvgComponent } from '@shared'
+import { Subject, takeUntil } from 'rxjs'
 
-export interface Column {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface Column<T = any> {
   text?: string
   id: string
   width?: number
+  transformFn?: (value: T) => string
 }
+
 @Component({
   selector: 'app-table',
   standalone: true,
@@ -41,12 +45,11 @@ export interface Column {
     MatButtonModule,
     MatSortModule,
     MatPaginatorModule,
-    FechaPipe,
-    DatePipe,
-    EurosPipe,
+    MatTooltipModule,
+    SvgComponent,
   ],
-  providers: [FechaPipe, DatePipe, EurosPipe],
   templateUrl: './table.component.html',
+  styleUrl: './table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent
@@ -133,8 +136,11 @@ export class TableComponent
   }
 
   public deleteClick(row: Column): void {
-    this.dialogService.openConfirmDialog().subscribe(ok => {
-      if (ok) this.delete.emit(row)
-    })
+    this.dialogService
+      .openConfirmDialog()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(ok => {
+        if (ok) this.delete.emit(row)
+      })
   }
 }

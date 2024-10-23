@@ -1,4 +1,4 @@
-import { Injectable, ErrorHandler } from '@angular/core'
+import { ErrorHandler, Injectable } from '@angular/core'
 import { DialogService } from '../services/dialog.service'
 
 /**
@@ -33,6 +33,6 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     // eslint-disable-next-line no-console
     console.error(error)
-    this.dialogService.error(error as string)
+    if (error && typeof error === 'string') this.dialogService.error(error)
   }
 }
