@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ControlAmWeb": {
+    "AngularTemplate": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/control-am-web",
+            "outputPath": "dist/angular-template",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -67,10 +67,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ControlAmWeb:build:production"
+              "buildTarget": "AngularTemplate:build:production"
             },
             "development": {
-              "buildTarget": "ControlAmWeb:build:development"
+              "buildTarget": "AngularTemplate:build:development"
             }
           },
           "defaultConfiguration": "development"

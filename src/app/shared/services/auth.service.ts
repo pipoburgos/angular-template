@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
+import { Observable, tap } from 'rxjs'
+
 import { MatDialog } from '@angular/material/dialog'
 import { Router } from '@angular/router'
-import { Observable, tap } from 'rxjs'
 import { environment } from 'src/enviroments/enviroment'
 import { StorageService } from './storage.service'
 
@@ -44,8 +45,8 @@ export class AuthService {
   public login(username: string, password: string): Observable<TokenResponse> {
     const body = new URLSearchParams()
     body.set('grant_type', 'password')
-    body.set('client_id', environment.client_id)
-    body.set('client_secret', environment.client_secret)
+    body.set('client_id', environment.client_id ?? '')
+    body.set('client_secret', environment.client_secret ?? '')
     body.set('username', username)
     if (password) {
       body.set('password', password)
@@ -59,7 +60,7 @@ export class AuthService {
     const startExpirationAt = +(new Date().getTime() / 1000).toFixed(0)
     return (
       this.http.post(
-        environment.token_endpoint,
+        environment.token_endpoint ?? '',
         body.toString(),
         options,
       ) as Observable<TokenResponse>
@@ -73,8 +74,8 @@ export class AuthService {
   public refreshToken(): Observable<TokenResponse> {
     const body = new URLSearchParams()
     body.set('grant_type', 'refresh_token')
-    body.set('client_id', environment.client_id)
-    body.set('client_secret', environment.client_secret)
+    body.set('client_id', environment.client_id ?? '')
+    body.set('client_secret', environment.client_secret ?? '')
     body.set('refresh_token', this.tokenResponse?.refresh_token ?? '')
     const options = {
       headers: new HttpHeaders().set(
@@ -85,7 +86,7 @@ export class AuthService {
     const startExpirationAt = +(new Date().getTime() / 1000).toFixed(0)
     return (
       this.http.post(
-        environment.token_endpoint,
+        environment.token_endpoint ?? '',
         body.toString(),
         options,
       ) as Observable<TokenResponse>
