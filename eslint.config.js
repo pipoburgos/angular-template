@@ -22,6 +22,13 @@ module.exports = tseslint.config(
     ],
     processor: angular.processInlineTemplates,
     rules: {
+      "prettier/prettier": [
+        "error",
+        {},
+        {
+          "usePrettierrc": true
+        }
+      ],
       // los métodos sean públicos o privados
       '@typescript-eslint/explicit-member-accessibility': [
         'error',

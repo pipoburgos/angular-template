@@ -7,4 +7,5 @@ export interface Environment {
   client_secret: string
   cachable_urls: string[]
   max_cache_minutes: number
+  crypto_key: string
 }

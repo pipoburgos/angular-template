@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "eslint": "npx eslint src --fix",
-    "prettier": "npx prettier \"src/**/*.{ts,html,css,scss}\" --write",
+    "prettier": "npx prettier src --write",
     "check": "npm run openapi & npm run prettier && npm run eslint",
     "openapi": "ng-openapi-gen",
     "start": "npm run check && ng serve",
