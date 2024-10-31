@@ -18,6 +18,7 @@ import { CommonModule } from '@angular/common'
 import { MatAutocompleteModule } from '@angular/material/autocomplete'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
+import { normalize } from '@shared'
 
 export interface ComboItem {
   id: string
@@ -109,7 +110,7 @@ export class SelectorComponent implements ControlValueAccessor, OnDestroy {
       return this.items
     }
     return this.items.filter(item =>
-      item.value.toLowerCase().includes(value.toLowerCase()),
+      normalize(item.value).includes(normalize(value)),
     )
   }
 
