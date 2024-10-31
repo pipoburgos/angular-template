@@ -2,17 +2,12 @@
 const eslint = require('@eslint/js')
 const tseslint = require('typescript-eslint')
 const angular = require('angular-eslint')
-const unusedImports = require('eslint-plugin-unused-imports')
 const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended')
 
 module.exports = tseslint.config(
   {
     files: ['**/*.ts'],
-    ignores: ['**/.angular/**', 'src/app/clients/**', '**/dist/**', '**/e2e/**'],
-    plugins: {
-      // @ts-ignore
-      'unused-imports': unusedImports,
-    },
+    ignores: ['src/app/samplepath/**'],
     extends: [
       eslint.configs.recommended,
       ...tseslint.configs.recommended,
@@ -22,16 +17,26 @@ module.exports = tseslint.config(
     ],
     processor: angular.processInlineTemplates,
     rules: {
-      "prettier/prettier": [
-        "error",
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          vars: 'all',
+          varsIgnorePattern: '^_',
+          args: 'after-used',
+          argsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+        },
+      ],
+      'prettier/prettier': [
+        'error',
         {},
         {
-          "usePrettierrc": true
-        }
+          usePrettierrc: true,
+        },
       ],
       // los métodos sean públicos o privados
       '@typescript-eslint/explicit-member-accessibility': [
-        'error',
+        'off',
         {
           accessibility: 'explicit',
         },
